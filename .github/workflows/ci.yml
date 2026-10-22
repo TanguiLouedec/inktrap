@@ -45,3 +45,26 @@ jobs:
       - name: Check npm tarball contents
         # npm pack --dry-run; fails on anything outside dist/, package.json, README.md, LICENSE.
         run: pnpm check:pack
+
+  changeset:
+    # PRs that change a published package must include a changeset (`pnpm changeset`;
+    # use `pnpm changeset --empty` for changes that shouldn't release). The bot's own
+    # "Version Packages" PR consumes changesets, so it is exempt.
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Require a changeset
+        run: pnpm exec changeset status --since=origin/${{ github.base_ref }}

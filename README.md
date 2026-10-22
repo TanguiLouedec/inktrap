@@ -140,8 +140,10 @@ pnpm size                # size budget + tree-shaking check (after build)
 pnpm check:pack          # verify the npm tarball contents (after build)
 ```
 
-To release, add a changeset with `pnpm changeset`. The release workflow opens a "Version
-Packages" PR, and merging it publishes to npm with provenance.
+Every change to the library ships with a changeset (`pnpm changeset`). The release workflow
+turns them into a "Version Packages" PR, and merging it publishes to npm with provenance. See
+[RELEASING.md](https://github.com/TanguiLouedec/inktrap/blob/main/RELEASING.md) for the
+versioning policy and the one-time first-release setup.
 
 The playground ships fonts under the SIL Open Font License (Fraunces, Space Grotesk, Literata);
 each license sits next to its font in `apps/playground/public/fonts/`.

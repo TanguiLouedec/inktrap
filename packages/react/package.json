@@ -37,12 +37,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inktrap/inktrap.git",
+    "url": "git+https://github.com/TanguiLouedec/inktrap.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/inktrap/inktrap#readme",
+  "homepage": "https://github.com/TanguiLouedec/inktrap#readme",
   "bugs": {
-    "url": "https://github.com/inktrap/inktrap/issues"
+    "url": "https://github.com/TanguiLouedec/inktrap/issues"
   },
   "keywords": [
     "react",
