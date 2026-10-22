@@ -1,0 +1,92 @@
+{
+  "name": "@inktrap/react",
+  "version": "0.0.0",
+  "description": "Free, unstyled React components for showcasing your own self-hosted fonts: specimens, type testers and more.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "bench": "vitest bench --run --reporter=verbose",
+    "typecheck": "tsc --noEmit",
+    "size": "size-limit && node scripts/check-treeshake.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inktrap/inktrap.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/inktrap/inktrap#readme",
+  "bugs": {
+    "url": "https://github.com/inktrap/inktrap/issues"
+  },
+  "keywords": [
+    "react",
+    "typography",
+    "font",
+    "specimen",
+    "type-design",
+    "self-hosted-fonts"
+  ],
+  "size-limit": [
+    {
+      "name": "useFontFace + Specimen",
+      "path": "dist/index.js",
+      "import": "{ useFontFace, Specimen }",
+      "limit": "2 kB",
+      "gzip": true
+    },
+    {
+      "name": "useFontFace only",
+      "path": "dist/index.js",
+      "import": "{ useFontFace }",
+      "limit": "1.5 kB",
+      "gzip": true
+    },
+    {
+      "name": "FontPreload + preloadFont",
+      "path": "dist/index.js",
+      "import": "{ FontPreload, preloadFont }",
+      "limit": "500 B",
+      "gzip": true
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^14.2.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "size-limit": "^14.2.0",
+    "tsup": "^9.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

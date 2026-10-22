@@ -1,0 +1,52 @@
+/*
+ * A metric-matched fallback keeps text from shifting when Fraunces swaps in.
+ * Illustrative values: derive real ones from your font's metrics
+ * (e.g. with fontaine or capsize) so the fallback occupies the same space.
+ */
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  size-adjust: 104%;
+  ascent-override: 94%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+  background: #fbfaf7;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e5e2da;
+}
+
+main {
+  padding: 1rem 2rem 4rem;
+}
+
+section {
+  margin-block: 2rem;
+}
+
+h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b675e;
+}
+
+.muted {
+  color: #6b675e;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.5rem 1rem;
+}
