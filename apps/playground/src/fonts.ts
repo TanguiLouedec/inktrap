@@ -1,4 +1,4 @@
-import type { FontSource } from "@inktrap/react";
+import type { FontSource } from "@inktrapjs/react";
 
 // Open Font License fonts self-hosted from public/fonts (license files sit next to each font).
 export const fraunces: FontSource = {

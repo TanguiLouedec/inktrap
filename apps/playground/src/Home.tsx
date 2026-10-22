@@ -1,4 +1,4 @@
-import { FontPreload, Specimen } from "@inktrap/react";
+import { FontPreload, Specimen } from "@inktrapjs/react";
 import { fraunces, frauncesItalic, literata, spaceGrotesk } from "./fonts";
 
 export function Home() {

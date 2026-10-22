@@ -12,8 +12,8 @@ render unstyled markup you can style however you like.
 ## Install
 
 ```sh
-npm install @inktrap/react
-# or: pnpm add @inktrap/react / yarn add @inktrap/react
+npm install @inktrapjs/react
+# or: pnpm add @inktrapjs/react / yarn add @inktrapjs/react
 ```
 
 React 18 or newer is required as a peer dependency. The package has zero runtime dependencies.
@@ -21,7 +21,7 @@ React 18 or newer is required as a peer dependency. The package has zero runtime
 ## Usage
 
 ```tsx
-import { Specimen } from "@inktrap/react";
+import { Specimen } from "@inktrapjs/react";
 
 const myFont = {
   family: "My Font",
@@ -43,7 +43,7 @@ applied. Everything else — color, line height, layout — is yours. It also se
 The hook behind every component, for building your own:
 
 ```tsx
-import { useFontFace } from "@inktrap/react";
+import { useFontFace } from "@inktrapjs/react";
 
 function Tester() {
   const { status, family } = useFontFace({ family: "My Font", src: "/fonts/my-font.woff2", weight: 700 });
@@ -68,7 +68,7 @@ function Tester() {
 Start the download before React even renders, which is the biggest single win for font display time:
 
 ```tsx
-import { FontPreload, preloadFont } from "@inktrap/react";
+import { FontPreload, preloadFont } from "@inktrapjs/react";
 
 // In your document head (Next.js layout, Remix links, etc.). React 19 hoists it to <head> automatically.
 <FontPreload src="/fonts/my-font-regular.woff2" />
@@ -116,14 +116,14 @@ follows strict rules:
   min+gzip**.
 - **Heavy features stay out of the main entry.** Anything that parses font files (glyph lists,
   OpenType feature tables, …) will ship as a separate subpath export such as
-  `@inktrap/react/glyphs`, loaded lazily, so sites that only show specimens never pay for it.
+  `@inktrapjs/react/glyphs`, loaded lazily, so sites that only show specimens never pay for it.
 
 ## Local development
 
 This is a pnpm workspace:
 
 ```
-packages/react     @inktrap/react, the published library
+packages/react     @inktrapjs/react, the published library
 apps/playground    Vite app for developing and eyeballing components
 ```
 

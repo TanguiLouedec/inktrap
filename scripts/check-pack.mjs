@@ -1,4 +1,4 @@
-// Fails if the @inktrap/react tarball would ship anything besides dist/, package.json,
+// Fails if the @inktrapjs/react tarball would ship anything besides dist/, package.json,
 // README.md and LICENSE, or if its README/LICENSE drifted from the repo root copies.
 import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";

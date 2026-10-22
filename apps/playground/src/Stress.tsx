@@ -1,4 +1,4 @@
-import { Specimen } from "@inktrap/react";
+import { Specimen } from "@inktrapjs/react";
 import { useEffect, useState } from "react";
 import { fraunces, literata, spaceGrotesk } from "./fonts";
 

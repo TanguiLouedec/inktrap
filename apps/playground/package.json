@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@inktrap/react": "workspace:*",
+    "@inktrapjs/react": "workspace:*",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

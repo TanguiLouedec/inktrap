@@ -8,7 +8,7 @@ concurrency: release-${{ github.ref }}
 
 # Publishing uses npm Trusted Publishing (OIDC): there is no NPM_TOKEN secret.
 # BEFORE THE FIRST AUTOMATED RELEASE, link this repository and workflow on npmjs.com:
-#   @inktrap/react → Settings → Trusted Publisher → GitHub Actions,
+#   @inktrapjs/react → Settings → Trusted Publisher → GitHub Actions,
 #   owner "TanguiLouedec", repository "inktrap", workflow file "release.yml".
 # A package that doesn't exist on npm yet can't have a trusted publisher, so 0.1.0 is
 # published by hand first. See RELEASING.md for the full first-release steps.

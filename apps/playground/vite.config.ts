@@ -9,7 +9,7 @@ export default defineConfig(({ command }) => ({
     command === "serve"
       ? {
           alias: {
-            "@inktrap/react": fileURLToPath(new URL("../../packages/react/src/index.ts", import.meta.url)),
+            "@inktrapjs/react": fileURLToPath(new URL("../../packages/react/src/index.ts", import.meta.url)),
           },
         }
       : {},

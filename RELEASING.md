@@ -1,6 +1,6 @@
 # Releasing
 
-`@inktrap/react` is versioned with [Changesets](https://github.com/changesets/changesets) and
+`@inktrapjs/react` is versioned with [Changesets](https://github.com/changesets/changesets) and
 published from GitHub Actions with npm Trusted Publishing (OIDC, with provenance, no tokens).
 
 ## Versioning policy
@@ -38,8 +38,8 @@ During 0.x only the latest release line gets fixes.
 
 ### Future packages
 
-When `packages/core` lands, version it in lockstep with `@inktrap/react` by adding
-`"fixed": [["@inktrap/core", "@inktrap/react"]]` to `.changeset/config.json`.
+When `packages/core` lands, version it in lockstep with `@inktrapjs/react` by adding
+`"fixed": [["@inktrapjs/core", "@inktrapjs/react"]]` to `.changeset/config.json`.
 
 ## Day-to-day flow
 
@@ -76,10 +76,10 @@ published by hand once. Every release after that is automated.
 2. **Let Actions open PRs:** repo Settings → Actions → General → Workflow permissions → tick
    "Allow GitHub Actions to create and approve pull requests".
    Then re-run the Release workflow (Actions tab), or push any commit. It opens a
-   **Version Packages** PR bumping `@inktrap/react` to `0.1.0`. Don't merge it yet.
+   **Version Packages** PR bumping `@inktrapjs/react` to `0.1.0`. Don't merge it yet.
 
-3. **Create the npm scope:** on npmjs.com, create the free organization `inktrap` so that you
-   can publish `@inktrap/*`.
+3. **Create the npm scope:** on npmjs.com, create the free organization `inktrapjs` so that you
+   can publish `@inktrapjs/*`.
 
 4. **Publish 0.1.0 by hand** from the Version Packages branch:
 
@@ -93,7 +93,7 @@ published by hand once. Every release after that is automated.
    npm publish --provenance=false   # provenance only works from CI; later releases have it
    ```
 
-5. **Link the trusted publisher:** npmjs.com → `@inktrap/react` → Settings → Trusted Publisher →
+5. **Link the trusted publisher:** npmjs.com → `@inktrapjs/react` → Settings → Trusted Publisher →
    GitHub Actions: owner `TanguiLouedec`, repository `inktrap`, workflow `release.yml`, no
    environment. Optionally also set "Require two-factor authentication and disallow tokens".
 
@@ -102,9 +102,9 @@ published by hand once. Every release after that is automated.
 
    ```sh
    git switch main && git pull
-   git tag @inktrap/react@0.1.0
-   git push origin @inktrap/react@0.1.0
-   gh release create @inktrap/react@0.1.0 --notes-file packages/react/CHANGELOG.md
+   git tag @inktrapjs/react@0.1.0
+   git push origin @inktrapjs/react@0.1.0
+   gh release create @inktrapjs/react@0.1.0 --notes-file packages/react/CHANGELOG.md
    ```
 
 From here on, releases go through the day-to-day flow above.

@@ -20,7 +20,7 @@ importers:
 
   apps/playground:
     dependencies:
-      '@inktrap/react':
+      '@inktrapjs/react':
         specifier: workspace:*
         version: link:../../packages/react
       react:
