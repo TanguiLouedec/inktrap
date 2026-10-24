@@ -7,14 +7,10 @@ on:
 concurrency: release-${{ github.ref }}
 
 # Publishing uses npm Trusted Publishing (OIDC): there is no NPM_TOKEN secret.
-# BEFORE THE FIRST AUTOMATED RELEASE, link this repository and workflow on npmjs.com:
-#   @inktrapjs/react → Settings → Trusted Publisher → GitHub Actions,
-#   owner "TanguiLouedec", repository "inktrap", workflow file "release.yml".
-# A package that doesn't exist on npm yet can't have a trusted publisher, so 0.1.0 is
-# published by hand first. See RELEASING.md for the full first-release steps.
-#
-# Also enable: repo Settings → Actions → General → "Allow GitHub Actions to create and
-# approve pull requests", or changesets/action can't open the "Version Packages" PR.
+# @inktrapjs/react trusts this repository with workflow file "release.yml" and no
+# environment; renaming this file breaks publishing until npmjs.com is updated.
+# A new package must be published by hand once before it can trust this workflow
+# (see "Adding a package" in RELEASING.md).
 permissions:
   contents: write # push the version commit and tags
   pull-requests: write # open the "Version Packages" PR
@@ -24,11 +20,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           # Node 24 ships npm >= 11.5.1, required for trusted publishing.
           node-version: 24
@@ -38,7 +34,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Create release PR or publish
-        uses: changesets/action@v1
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
           version: pnpm version-packages
           publish: pnpm release
