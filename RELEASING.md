@@ -48,7 +48,8 @@ When `packages/core` lands, version it in lockstep with `@inktrapjs/react` by ad
    that shouldn't release.
 2. When the PR merges, the Release workflow opens (or updates) a **Version Packages** PR that
    bumps versions and writes `CHANGELOG.md`.
-3. Merging the Version Packages PR publishes to npm with provenance and pushes a git tag.
+3. Merging the Version Packages PR (with the admin bypass, see below) publishes to npm with
+   provenance, pushes a git tag and creates the GitHub release.
 
 ## Prereleases
 
@@ -61,50 +62,42 @@ pnpm changeset pre exit         # before merging back to main
 Prereleases publish under the `next` dist-tag. For trying a PR build without publishing to npm,
 use [pkg.pr.new](https://pkg.pr.new).
 
-## First-time setup
+## Repository setup
 
-npm can't attach a trusted publisher to a package that doesn't exist yet, so `0.1.0` is
-published by hand once. Every release after that is automated.
+Done for 0.1.0 (2026-10-24); kept here for reference.
 
-1. **Create the GitHub repo** `TanguiLouedec/inktrap`, empty (no README, license or .gitignore),
-   then push:
+- npm organization `inktrapjs` owns `@inktrapjs/*`. `@inktrapjs/react` has a trusted publisher:
+  GitHub Actions, owner `TanguiLouedec`, repository `inktrap`, workflow `release.yml`, no
+  environment.
+- `main` is protected by a ruleset: changes land through squash-merged PRs with the `ci` and
+  `changeset` checks passing; no force-pushes or deletion. Repository admins can bypass on PRs.
+  The Version Packages PR is opened with `GITHUB_TOKEN`, so CI never runs on it: merge it with
+  the bypass.
+- Actions are pinned to commit SHAs; Dependabot keeps them and the dev dependencies up to date.
+- Repo Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"
+  is on, or changesets/action can't open the Version Packages PR.
 
-   ```sh
-   git push -u origin main
-   ```
+### Adding a package
 
-2. **Let Actions open PRs:** repo Settings → Actions → General → Workflow permissions → tick
-   "Allow GitHub Actions to create and approve pull requests".
-   Then re-run the Release workflow (Actions tab), or push any commit. It opens a
-   **Version Packages** PR bumping `@inktrapjs/react` to `0.1.0`. Don't merge it yet.
+npm can't attach a trusted publisher to a package that doesn't exist yet, so publish the first
+version by hand, then link it:
 
-3. **Create the npm scope:** on npmjs.com, create the free organization `inktrapjs` so that you
-   can publish `@inktrapjs/*`.
+```sh
+pnpm install --frozen-lockfile
+pnpm build && pnpm test && pnpm check:pack
+npm login
+cd packages/<name>
+npm publish --provenance=false   # provenance only works from CI; later releases have it
+```
 
-4. **Publish 0.1.0 by hand** from the Version Packages branch:
+Run `npm publish` in an interactive terminal: the 2FA browser approval needs it. Then on
+npmjs.com → the package → Settings → Trusted Publisher, add the same GitHub Actions publisher as
+above, and set "Require two-factor authentication and disallow tokens". If the Version Packages
+PR that bumped this version merges afterwards, Changesets publishes nothing and doesn't tag it,
+so tag it yourself:
 
-   ```sh
-   git fetch origin
-   git switch changeset-release/main
-   pnpm install --frozen-lockfile
-   pnpm build && pnpm test && pnpm check:pack
-   npm login
-   cd packages/react
-   npm publish --provenance=false   # provenance only works from CI; later releases have it
-   ```
-
-5. **Link the trusted publisher:** npmjs.com → `@inktrapjs/react` → Settings → Trusted Publisher →
-   GitHub Actions: owner `TanguiLouedec`, repository `inktrap`, workflow `release.yml`, no
-   environment. Optionally also set "Require two-factor authentication and disallow tokens".
-
-6. **Merge the Version Packages PR.** The Release workflow sees that 0.1.0 is already on npm and
-   publishes nothing. Changesets only tags what it publishes, so tag this one yourself:
-
-   ```sh
-   git switch main && git pull
-   git tag @inktrapjs/react@0.1.0
-   git push origin @inktrapjs/react@0.1.0
-   gh release create @inktrapjs/react@0.1.0 --notes-file packages/react/CHANGELOG.md
-   ```
-
-From here on, releases go through the day-to-day flow above.
+```sh
+git tag @inktrapjs/<name>@<version>
+git push origin @inktrapjs/<name>@<version>
+gh release create @inktrapjs/<name>@<version> --notes-file packages/<name>/CHANGELOG.md
+```
