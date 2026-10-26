@@ -40,6 +40,35 @@ export function Hero() {
 applied. Everything else — color, line height, layout — is yours. It also sets
 `data-inktrap-status="loading" | "loaded" | "error"` so you can style each state in CSS.
 
+### `<Waterfall />`
+
+The same text at a range of sizes, the classic way to show how a face holds up from caption to
+display:
+
+```tsx
+import { Waterfall } from "@inktrapjs/react";
+
+<Waterfall font={myFont} text="Handgloves" fallback="Georgia, serif" />
+<Waterfall font={myFont} sizes={[16, 24, "3rem", "5rem"]} />
+```
+
+`sizes` defaults to `defaultWaterfallSizes` (12, 14, 16, 20, 24, 32, 40, 48, 64, 80 and 96 px),
+which is exported so you can extend it. Numbers are pixels; strings are any CSS length. The markup
+is unstyled:
+
+```html
+<div style="font-family: &quot;My Font&quot;, Georgia, serif" data-inktrap-status="loaded" data-inktrap-waterfall>
+  <div style="font-size: 12px" data-inktrap-size="12">Handgloves</div>
+  <div style="font-size: 14px" data-inktrap-size="14">Handgloves</div>
+  …
+</div>
+```
+
+Style rows with `[data-inktrap-waterfall] > [data-inktrap-size]`, or label them with CSS, e.g.
+`[data-inktrap-size]::before { content: attr(data-inktrap-size) "px"; }`. Like `<Specimen />`,
+inline `font`, `style` and `sizes` props are compared by value, so re-rendering the parent is
+cheap.
+
 ### `useFontFace(source)`
 
 The hook behind every component, for building your own:
@@ -115,8 +144,8 @@ follows strict rules:
   only peer.
 - Named exports only, `sideEffects: false`, nothing runs on import. Each export tree-shakes on its
   own, and CI checks that.
-- Size budgets, enforced in CI with size-limit: `useFontFace` + `<Specimen />` stay under **2 kB
-  min+gzip**.
+- Size budgets, enforced in CI with size-limit: `useFontFace` + `<Specimen />` and `useFontFace` +
+  `<Waterfall />` each stay under **2 kB min+gzip**.
 - **Heavy features stay out of the main entry.** Anything that parses font files (glyph lists,
   OpenType feature tables, …) will ship as a separate subpath export such as
   `@inktrapjs/react/glyphs`, loaded lazily, so sites that only show specimens never pay for it.

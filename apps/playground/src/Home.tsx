@@ -14,6 +14,13 @@ export function Home() {
           text="Handgloves"
         />
         <Specimen font={frauncesItalic} size={40} fallback="Georgia, serif" className="muted" />
+        <Specimen
+          font={fraunces}
+          size={56}
+          fallback='"Fraunces Fallback", Georgia, serif'
+          style={{ fontWeight: 300, fontVariationSettings: '"SOFT" 100, "WONK" 1' }}
+          text="Soft & wonky, weight 300"
+        />
       </section>
       <section>
         <h2>Space Grotesk</h2>
