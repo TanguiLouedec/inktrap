@@ -1,6 +1,6 @@
 {
   "name": "@inktrapjs/manifest",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "The inktrap font manifest format: TypeScript types and tiny helpers for describing self-hosted font families.",
   "license": "MIT",
   "type": "module",
