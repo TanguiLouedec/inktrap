@@ -16,7 +16,9 @@ npm install @inktrapjs/react
 # or: pnpm add @inktrapjs/react / yarn add @inktrapjs/react
 ```
 
-React 18 or newer is required as a peer dependency. The package has zero runtime dependencies.
+React 18 or newer is required as a peer dependency. The only dependency is
+[`@inktrapjs/manifest`](./packages/manifest) (types plus a few hundred bytes of helpers, itself
+dependency-free).
 
 ## Usage
 
@@ -109,10 +111,11 @@ You know your font's metrics best. Tools like [fontaine](https://github.com/unjs
 inktrap runs on showcase sites where speed and visual stability are the product, so the main entry
 follows strict rules:
 
-- Zero runtime dependencies; React is the only peer.
+- No third-party runtime dependencies: only `@inktrapjs/manifest`, which has none. React is the
+  only peer.
 - Named exports only, `sideEffects: false`, nothing runs on import. Each export tree-shakes on its
   own, and CI checks that.
-- Size budget, enforced in CI with size-limit: `useFontFace` + `<Specimen />` stay under **2 kB
+- Size budgets, enforced in CI with size-limit: `useFontFace` + `<Specimen />` stay under **2 kB
   min+gzip**.
 - **Heavy features stay out of the main entry.** Anything that parses font files (glyph lists,
   OpenType feature tables, …) will ship as a separate subpath export such as
@@ -123,7 +126,8 @@ follows strict rules:
 This is a pnpm workspace:
 
 ```
-packages/react     @inktrapjs/react, the published library
+packages/react     @inktrapjs/react, the component library
+packages/manifest  @inktrapjs/manifest, the font manifest format (types + tiny helpers)
 apps/playground    Vite app for developing and eyeballing components
 ```
 
@@ -136,11 +140,11 @@ pnpm bench               # font cache benchmark
 pnpm lint                # Biome (pnpm format to fix formatting)
 pnpm typecheck
 pnpm build
-pnpm size                # size budget + tree-shaking check (after build)
-pnpm check:pack          # verify the npm tarball contents (after build)
+pnpm size                # size budgets + tree-shaking check (after build)
+pnpm check:pack          # verify the npm tarball contents of every package (after build)
 ```
 
-Every change to the library ships with a changeset (`pnpm changeset`). The release workflow
+Every change to a published package ships with a changeset (`pnpm changeset`). The release workflow
 turns them into a "Version Packages" PR, and merging it publishes to npm with provenance. See
 [RELEASING.md](https://github.com/TanguiLouedec/inktrap/blob/main/RELEASING.md) for the
 versioning policy and the one-time first-release setup.

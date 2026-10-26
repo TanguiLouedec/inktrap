@@ -27,6 +27,9 @@
     "typecheck": "tsc --noEmit",
     "size": "size-limit && node scripts/check-treeshake.mjs"
   },
+  "dependencies": {
+    "@inktrapjs/manifest": "workspace:^"
+  },
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"

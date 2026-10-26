@@ -3,7 +3,8 @@
   "compilerOptions": {
     "types": ["vite/client", "node"],
     "paths": {
-      "@inktrapjs/react": ["../../packages/react/src/index.ts"]
+      "@inktrapjs/react": ["../../packages/react/src/index.ts"],
+      "@inktrapjs/manifest": ["../../packages/manifest/src/index.ts"]
     }
   },
   "include": ["src", "vite.config.ts"]
