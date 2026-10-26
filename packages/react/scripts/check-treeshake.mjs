@@ -5,14 +5,18 @@ import { build } from "esbuild";
 const entry = new URL("../dist/index.js", import.meta.url).pathname.replace(/^\/(\w:)/, "$1");
 
 const markers = {
+  // The pangram is shared by Specimen and Waterfall.
   Specimen: "quick brown fox",
+  Waterfall: "data-inktrap-waterfall",
   FontPreload: "preload",
   useFontFace: "swap",
 };
 
 const cases = [
-  { imports: ["useFontFace"], forbidden: ["Specimen", "FontPreload"] },
-  { imports: ["FontPreload", "preloadFont"], forbidden: ["Specimen", "useFontFace"] },
+  { imports: ["useFontFace"], forbidden: ["Specimen", "Waterfall", "FontPreload"] },
+  { imports: ["Specimen"], forbidden: ["Waterfall", "FontPreload"] },
+  { imports: ["Waterfall"], forbidden: ["FontPreload"] },
+  { imports: ["FontPreload", "preloadFont"], forbidden: ["Specimen", "Waterfall", "useFontFace"] },
 ];
 
 let failed = false;
