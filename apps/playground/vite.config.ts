@@ -10,6 +10,9 @@ export default defineConfig(({ command }) => ({
       ? {
           alias: {
             "@inktrapjs/react": fileURLToPath(new URL("../../packages/react/src/index.ts", import.meta.url)),
+            "@inktrapjs/manifest": fileURLToPath(
+              new URL("../../packages/manifest/src/index.ts", import.meta.url),
+            ),
           },
         }
       : {},

@@ -1,5 +1,5 @@
 import { FontPreload, Specimen } from "@inktrapjs/react";
-import { fraunces, frauncesItalic, literata, spaceGrotesk } from "./fonts";
+import { fraunces, frauncesFamily, frauncesItalic, literata, spaceGrotesk } from "./fonts";
 
 export function Home() {
   return (
@@ -20,6 +20,25 @@ export function Home() {
           fallback='"Fraunces Fallback", Georgia, serif'
           style={{ fontWeight: 300, fontVariationSettings: '"SOFT" 100, "WONK" 1' }}
           text="Soft & wonky, weight 300"
+        />
+      </section>
+      <section>
+        <h2>Fraunces family (manifest, named instances)</h2>
+        {frauncesFamily.instances?.map(({ name }) => (
+          <Specimen
+            key={name}
+            font={frauncesFamily}
+            instance={name}
+            size={44}
+            fallback='"Fraunces Fallback", Georgia, serif'
+            text={name}
+          />
+        ))}
+        <Specimen
+          font={frauncesFamily}
+          face={{ style: "italic", weight: 200 }}
+          size={32}
+          text="face: italic, 200"
         />
       </section>
       <section>
