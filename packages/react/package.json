@@ -1,6 +1,6 @@
 {
   "name": "@inktrapjs/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Free, unstyled React components for showcasing your own self-hosted fonts: specimens, type testers and more.",
   "license": "MIT",
   "type": "module",
