@@ -1,3 +1,6 @@
+/** CSS `font-display` values. Same as the DOM's `FontDisplay`, so the types work without the DOM lib. */
+export type FontDisplay = "auto" | "block" | "fallback" | "optional" | "swap";
+
 /** A self-hosted font file plus the FontFace descriptors that select it. */
 export interface FontSource {
   /** The `font-family` name the face is registered under. */
