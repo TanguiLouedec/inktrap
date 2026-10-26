@@ -61,6 +61,13 @@
       "gzip": true
     },
     {
+      "name": "useFontFace + Waterfall",
+      "path": "dist/index.js",
+      "import": "{ useFontFace, Waterfall }",
+      "limit": "2 kB",
+      "gzip": true
+    },
+    {
       "name": "useFontFace only",
       "path": "dist/index.js",
       "import": "{ useFontFace }",

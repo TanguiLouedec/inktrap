@@ -50,3 +50,23 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 0.5rem 1rem;
 }
+
+.waterfall {
+  line-height: 1.2;
+}
+
+.waterfall > [data-inktrap-size] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.waterfall > [data-inktrap-size]::before {
+  content: attr(data-inktrap-size);
+  display: inline-block;
+  width: 3rem;
+  font:
+    0.7rem system-ui,
+    sans-serif;
+  color: #6b675e;
+}
