@@ -40,11 +40,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Size budget and tree-shaking
+      - name: Size budgets and tree-shaking
         run: pnpm size
 
       - name: Check npm tarball contents
-        # npm pack --dry-run; fails on anything outside dist/, package.json, README.md, LICENSE.
+        # npm pack --dry-run for every published package; fails on anything outside dist/,
+        # package.json, README.md, LICENSE.
         run: pnpm check:pack
 
   changeset:

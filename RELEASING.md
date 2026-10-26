@@ -1,6 +1,6 @@
 # Releasing
 
-`@inktrapjs/react` is versioned with [Changesets](https://github.com/changesets/changesets) and
+The `@inktrapjs/*` packages are versioned with [Changesets](https://github.com/changesets/changesets) and
 published from GitHub Actions with npm Trusted Publishing (OIDC, with provenance, no tokens).
 
 ## Versioning policy
@@ -36,10 +36,12 @@ Mark the old API `@deprecated` and add a development-only warning (guarded by
 
 During 0.x only the latest release line gets fixes.
 
-### Future packages
+### Lockstep versions
 
-When `packages/core` lands, version it in lockstep with `@inktrapjs/react` by adding
-`"fixed": [["@inktrapjs/core", "@inktrapjs/react"]]` to `.changeset/config.json`.
+All `@inktrapjs/*` packages share one version (`"fixed": [["@inktrapjs/*"]]` in
+`.changeset/config.json`): a changeset for any of them releases all of them at the same
+version, so `@inktrapjs/react@x` always pairs with `@inktrapjs/manifest@x`. New packages start
+at `0.0.0` in the repo and join the group's version on their first release.
 
 ## Day-to-day flow
 
@@ -80,15 +82,20 @@ Done for 0.1.0 (2026-10-24); kept here for reference.
 ### Adding a package
 
 npm can't attach a trusted publisher to a package that doesn't exist yet, so publish the first
-version by hand, then link it:
+version by hand, then link it. Do it from `main` right after the PR adding the package merges,
+while it is still at `0.0.0` and before the next Version Packages PR merges: the release job
+can't publish a package that has no trusted publisher, and would stop partway through.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm build && pnpm test && pnpm check:pack
 npm login
 cd packages/<name>
-npm publish --provenance=false   # provenance only works from CI; later releases have it
+pnpm pack                        # rewrites workspace:^ dependencies to real version ranges
+npm publish inktrapjs-<name>-0.0.0.tgz --provenance=false   # provenance only works from CI
 ```
+
+Publish in dependency order (`manifest` before `core`, `core` before `cli` and `vite`).
 
 Run `npm publish` in an interactive terminal: the 2FA browser approval needs it. Then on
 npmjs.com → the package → Settings → Trusted Publisher, add the same GitHub Actions publisher as
