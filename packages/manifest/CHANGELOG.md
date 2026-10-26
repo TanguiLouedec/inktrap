@@ -1,5 +1,11 @@
 # @inktrapjs/manifest
 
+## 0.1.2
+
+### Patch Changes
+
+- [#12](https://github.com/TanguiLouedec/inktrap/pull/12) [`b5ac637`](https://github.com/TanguiLouedec/inktrap/commit/b5ac637f398fce6344c1bd71d759caa2767f7c2b) Thanks [@TanguiLouedec](https://github.com/TanguiLouedec)! - `FontSource.display` no longer depends on the DOM's global `FontDisplay` type, so the manifest types also check in Node-only projects. `FontDisplay` is exported, with the same values.
+
 ## 0.1.1
 
 ### Patch Changes

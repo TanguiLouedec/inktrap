@@ -1,6 +1,6 @@
 {
   "name": "@inktrapjs/core",
-  "version": "0.0.0",
+  "version": "0.1.2",
   "description": "Reads TTF, OTF, WOFF and WOFF2 files into inktrap font manifests (axes, instances, features, metrics, names). Node only.",
   "license": "MIT",
   "type": "module",

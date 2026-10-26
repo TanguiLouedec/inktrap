@@ -1,5 +1,12 @@
 # @inktrapjs/react
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`b5ac637`](https://github.com/TanguiLouedec/inktrap/commit/b5ac637f398fce6344c1bd71d759caa2767f7c2b)]:
+  - @inktrapjs/manifest@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
