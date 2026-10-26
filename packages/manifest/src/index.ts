@@ -1,6 +1,7 @@
 export { type FaceQuery, isFontManifest, selectFace, variationSettings } from "./helpers";
 export type {
   FontAxis,
+  FontDisplay,
   FontFeature,
   FontGlyphsRef,
   FontInstance,

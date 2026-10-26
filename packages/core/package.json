@@ -1,0 +1,62 @@
+{
+  "name": "@inktrapjs/core",
+  "version": "0.0.0",
+  "description": "Reads TTF, OTF, WOFF and WOFF2 files into inktrap font manifests (axes, instances, features, metrics, names). Node only.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@inktrapjs/manifest": "workspace:^",
+    "fontkit": "^2.0.4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanguiLouedec/inktrap.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/TanguiLouedec/inktrap/tree/main/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/TanguiLouedec/inktrap/issues"
+  },
+  "keywords": [
+    "typography",
+    "font",
+    "variable-fonts",
+    "opentype",
+    "woff2",
+    "fontkit"
+  ],
+  "devDependencies": {
+    "@types/fontkit": "^2.0.9",
+    "@types/node": "^26.6.5",
+    "tsup": "^9.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
