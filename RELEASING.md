@@ -81,30 +81,57 @@ Done for 0.1.0 (2026-10-24); kept here for reference.
 
 ### Adding a package
 
-npm can't attach a trusted publisher to a package that doesn't exist yet, so publish the first
-version by hand, then link it. Do it from `main` right after the PR adding the package merges,
-while it is still at `0.0.0` and before the next Version Packages PR merges: the release job
-can't publish a package that has no trusted publisher, and would stop partway through.
+A trusted publisher can only be added to a package that exists on npm, so a new package is
+published once by hand at `0.0.0`. Do it from `main` right after the PR adding the package
+merges, and finish all steps before merging the next Version Packages PR: the release job can't
+publish a package without a trusted publisher, and it stops at the first failure.
 
-```sh
-pnpm install --frozen-lockfile
-pnpm build && pnpm test && pnpm check:pack
-npm login
-cd packages/<name>
-pnpm pack                        # rewrites workspace:^ dependencies to real version ranges
-npm publish inktrapjs-<name>-0.0.0.tgz --provenance=false   # provenance only works from CI
-```
+1. **Publish `0.0.0`** in an interactive terminal (the 2FA browser approval needs one; it doesn't
+   work through a non-interactive shell). Go in dependency order: `manifest` before `core`,
+   `core` before `cli` and `vite`.
 
-Publish in dependency order (`manifest` before `core`, `core` before `cli` and `vite`).
+   ```sh
+   git switch main && git pull --ff-only
+   pnpm install --frozen-lockfile
+   pnpm build && pnpm test && pnpm check:pack
+   npm login
+   cd packages/<name>
+   pnpm pack                        # rewrites workspace:^ dependencies to real version ranges
+   npm publish inktrapjs-<name>-0.0.0.tgz --provenance=false   # provenance only works from CI
+   ```
 
-Run `npm publish` in an interactive terminal: the 2FA browser approval needs it. Then on
-npmjs.com → the package → Settings → Trusted Publisher, add the same GitHub Actions publisher as
-above, and set "Require two-factor authentication and disallow tokens". If the Version Packages
-PR that bumped this version merges afterwards, Changesets publishes nothing and doesn't tag it,
-so tag it yourself:
+2. **Approve the staged version.** npm stages the first publish of a new package: it publishes a
+   public `0.0.0-stage` placeholder and holds `0.0.0` until a maintainer approves it.
 
-```sh
-git tag @inktrapjs/<name>@<version>
-git push origin @inktrapjs/<name>@<version>
-gh release create @inktrapjs/<name>@<version> --notes-file packages/<name>/CHANGELOG.md
-```
+   ```sh
+   npm stage list @inktrapjs/<name>
+   npm stage approve <stage-id>     # or npmjs.com → the package → Staged Packages → Approve
+   ```
+
+3. **Add the trusted publisher** (asks for 2FA), then check it:
+
+   ```sh
+   npm trust github @inktrapjs/<name> --file release.yml --repo TanguiLouedec/inktrap --allow-publish
+   npm trust list @inktrapjs/<name>
+   ```
+
+   `--allow-publish` is required: Changesets publishes with `npm publish`, not `npm stage`. On
+   npmjs.com → the package → Settings, also set "Require two-factor authentication and disallow
+   tokens". The new configuration shows "Pending validation" and **expires unless a publish
+   uses it within 48 hours**, so merge the Version Packages PR soon after.
+
+4. **Release and verify.** Merge the Version Packages PR (with the admin bypass). The release job
+   publishes every package of the group at the new version. Then install from npm in an empty
+   folder:
+
+   ```sh
+   npm install @inktrapjs/react@latest @inktrapjs/<name>@latest react react-dom
+   npm audit signatures            # every package: verified signatures and attestations
+   ```
+
+   A freshly published tarball can return 404 for a couple of minutes while the registry
+   catches up; retry before treating it as a failed release.
+
+If the release job fails with `E404 Not Found - PUT …/@inktrapjs%2f<name>`, the package has no
+matching trusted publisher: fix it (step 3) and rerun the failed job with
+`gh run rerun <run-id> --failed`. Changesets skips versions that are already on npm.
