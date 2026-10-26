@@ -40,6 +40,36 @@ export function Hero() {
 applied. Everything else — color, line height, layout — is yours. It also sets
 `data-inktrap-status="loading" | "loaded" | "error"` so you can style each state in CSS.
 
+### Font manifests
+
+A manifest describes a whole family: its faces, plus metadata such as axes, named instances and
+features (see [`@inktrapjs/manifest`](./packages/manifest)). Generate one from your font files,
+or write it by hand. Components accept a manifest wherever they take a font, and you pick the
+face with `face` or `instance`:
+
+```tsx
+import type { FontManifest } from "@inktrapjs/react";
+
+const myFamily: FontManifest = {
+  family: "My Font",
+  faces: [
+    { family: "My Font", src: "/fonts/my-font-roman.woff2", weight: "100 900" },
+    { family: "My Font", src: "/fonts/my-font-italic.woff2", weight: "100 900", style: "italic" },
+  ],
+  instances: [{ name: "Bold Italic", coordinates: { wght: 700 }, style: "italic" }],
+};
+
+<Specimen font={myFamily} />                                    // the upright face
+<Specimen font={myFamily} face={{ weight: 650, style: "italic" }} />
+<Waterfall font={myFamily} instance="Bold Italic" />
+```
+
+Only the selected face is loaded. To select it, the component also sets `font-weight` and
+`font-style` (from `face`, or from the instance), and an instance's coordinates go into
+`font-variation-settings`. Your `style` prop overrides any of these. With a plain font source,
+the output is exactly as before. Manifests are compared by identity, so define them outside
+render (or import them); inline `face` objects are fine.
+
 ### `<Waterfall />`
 
 The same text at a range of sizes, the classic way to show how a face holds up from caption to
