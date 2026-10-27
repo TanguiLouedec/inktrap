@@ -1,0 +1,64 @@
+{
+  "name": "@inktrapjs/cli",
+  "version": "0.0.0",
+  "description": "Command line tool that turns a folder of font files into inktrap font manifests (JSON). Node only.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "bin": {
+    "inktrap": "./dist/bin.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@inktrapjs/core": "workspace:^",
+    "@inktrapjs/manifest": "workspace:^"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanguiLouedec/inktrap.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/TanguiLouedec/inktrap/tree/main/packages/cli#readme",
+  "bugs": {
+    "url": "https://github.com/TanguiLouedec/inktrap/issues"
+  },
+  "keywords": [
+    "typography",
+    "font",
+    "variable-fonts",
+    "opentype",
+    "woff2",
+    "cli"
+  ],
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsup": "^9.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
