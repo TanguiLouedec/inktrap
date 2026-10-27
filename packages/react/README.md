@@ -158,6 +158,7 @@ This is a pnpm workspace:
 packages/react     @inktrapjs/react, the component library
 packages/manifest  @inktrapjs/manifest, the font manifest format (types + tiny helpers)
 packages/core      @inktrapjs/core, reads font files into manifests (Node only, fontkit)
+packages/cli       @inktrapjs/cli, `inktrap build`: a font folder to manifest JSON files
 apps/playground    Vite app for developing and eyeballing components
 ```
 
