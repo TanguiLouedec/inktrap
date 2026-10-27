@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["node", "vitest/globals"],
+    "paths": {
+      "@inktrapjs/core": ["../core/src/index.ts"],
+      "@inktrapjs/manifest": ["../manifest/src/index.ts"]
+    }
+  },
+  "include": ["src", "tsup.config.ts", "vitest.config.ts"]
+}
