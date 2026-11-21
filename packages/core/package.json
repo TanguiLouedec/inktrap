@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@inktrapjs/manifest": "workspace:^",
-    "fontkit": "^2.0.4"
+    "fontkit": "^3.0.0"
   },
   "publishConfig": {
     "access": "public",
